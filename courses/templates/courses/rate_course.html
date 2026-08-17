@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Course | LMS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+            color: #1f2937;
+        }
+
+        .rating-container {
+            width: 100%;
+            max-width: 620px;
+            padding: 20px;
+        }
+
+        .rating-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 45px 40px;
+            text-align: center;
+            box-shadow: 0 15px 45px rgba(15, 23, 42, 0.12);
+            border: 1px solid #e5e7eb;
+        }
+
+        .success-icon {
+            width: 75px;
+            height: 75px;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #ecfdf5;
+            font-size: 38px;
+        }
+
+        .completed {
+            color: #16a34a;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 32px;
+            color: #111827;
+        }
+
+        .subtitle {
+            margin: 12px auto 8px;
+            color: #6b7280;
+            font-size: 16px;
+            line-height: 1.6;
+            max-width: 480px;
+        }
+
+        .course-name {
+            margin: 20px 0 28px;
+            padding: 15px 20px;
+            background: #f8fafc;
+            border-radius: 10px;
+            font-size: 19px;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .rating-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+        }
+
+        .stars {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            gap: 8px;
+            margin: 10px 0 30px;
+        }
+
+        .stars input {
+            display: none;
+        }
+
+        .stars label {
+            font-size: 48px;
+            color: #d1d5db;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .stars label:hover,
+        .stars label:hover ~ label,
+        .stars input:checked ~ label {
+            color: #f59e0b;
+            transform: scale(1.08);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            background: #1f2937;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            background: #111827;
+            transform: translateY(-1px);
+        }
+
+        .skip-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .skip-link:hover {
+            color: #1f2937;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .rating-card {
+                padding: 35px 22px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .stars label {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="rating-container">
+
+    <div class="rating-card">
+
+        <div class="success-icon">
+            🏆
+        </div>
+
+        <div class="completed">
+            Course Completed
+        </div>
+
+        <h1>Rate Your Experience</h1>
+
+        <p class="subtitle">
+            Congratulations on completing the course!
+            Your feedback helps us improve the learning experience.
+        </p>
+
+        <div class="course-name">
+            {{ course.title }}
+        </div>
+
+        <div class="rating-title">
+            How would you rate this course?
+        </div>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="stars">
+
+                <input type="radio" name="rating" value="5" id="star5" required>
+                <label for="star5" title="Excellent">★</label>
+
+                <input type="radio" name="rating" value="4" id="star4">
+                <label for="star4" title="Very Good">★</label>
+
+                <input type="radio" name="rating" value="3" id="star3">
+                <label for="star3" title="Good">★</label>
+
+                <input type="radio" name="rating" value="2" id="star2">
+                <label for="star2" title="Fair">★</label>
+
+                <input type="radio" name="rating" value="1" id="star1">
+                <label for="star1" title="Poor">★</label>
+
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Submit Rating
+            </button>
+
+        </form>
+
+        <a href="{% url 'dashboard' %}" class="skip-link">
+            Skip for now
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

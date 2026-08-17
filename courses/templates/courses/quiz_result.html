@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Result</title>
+</head>
+
+<body>
+
+    <h1>🎉 Quiz Completed!</h1>
+
+    <h2>{{ course.title }}</h2>
+
+    <h3>Your Score: {{ score }} / {{ total }}</h3>
+
+    <h3>
+        Percentage:
+        {% widthratio score total 100 %}%
+    </h3>
+
+    {% if score >= 5 %}
+        <h2>✅ PASS</h2>
+        <p>Congratulations! You passed the quiz.</p>
+    {% else %}
+        <h2>❌ FAIL</h2>
+        <p>Keep practicing and try again.</p>
+    {% endif %}
+
+    <br>
+
+    <a href="{% url 'quiz_list' course.id %}">
+        <button>Retry Quiz</button>
+    </a>
+
+    <br><br>
+
+    <a href="{% url 'course_list' %}">
+        Back to Available Courses
+    </a>
+
+</body>
+</html>
