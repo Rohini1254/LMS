@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificate of Completion</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background: #eef1f5;
+            font-family: Georgia, "Times New Roman", serif;
+        }
+
+        .certificate {
+            max-width: 1000px;
+            min-height: 700px;
+            margin: auto;
+            padding: 55px;
+            background: #fff;
+            position: relative;
+            text-align: center;
+
+            border: 12px solid #1f2937;
+            outline: 4px solid #c9a227;
+
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .inner-border {
+            border: 2px solid #c9a227;
+            min-height: 575px;
+            padding: 35px;
+        }
+
+        .trophy {
+            font-size: 55px;
+            margin-bottom: 5px;
+        }
+
+        .certificate-title {
+            font-size: 42px;
+            letter-spacing: 4px;
+            margin: 5px 0;
+            color: #1f2937;
+        }
+
+        .subtitle {
+            font-size: 19px;
+            color: #666;
+            margin-top: 15px;
+        }
+
+        .presented {
+            font-size: 17px;
+            margin-top: 30px;
+        }
+
+        .student {
+            font-size: 38px;
+            font-weight: bold;
+            color: #111827;
+            margin: 15px 0;
+            text-transform: uppercase;
+            border-bottom: 2px solid #c9a227;
+            display: inline-block;
+            padding: 0 35px 8px;
+        }
+
+        .course-text {
+            font-size: 18px;
+            margin-top: 25px;
+        }
+
+        .course {
+            font-size: 30px;
+            font-weight: bold;
+            color: #b8860b;
+            margin: 15px 0;
+        }
+
+        .message {
+            font-size: 17px;
+            line-height: 1.6;
+            color: #444;
+            margin: 25px auto;
+            max-width: 700px;
+        }
+
+        .details {
+            margin-top: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .date {
+            text-align: left;
+            font-size: 15px;
+        }
+
+        .certificate-number {
+            text-align: right;
+            font-size: 15px;
+        }
+
+        .signature {
+            margin-top: 35px;
+            text-align: center;
+            min-width: 220px;
+        }
+
+        .signature-line {
+            width: 220px;
+            border-top: 1px solid #222;
+            margin: auto;
+            padding-top: 8px;
+        }
+
+        .signature-name {
+            font-weight: bold;
+        }
+
+        .signature-role {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .actions {
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            background: #1f2937;
+            color: white;
+        }
+
+        button:hover {
+            background: #111827;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 15px;
+            color: #1f2937;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        @media print {
+
+            @page {
+                size: A4 landscape;
+                margin: 0;
+            }
+
+            body {
+                padding: 0;
+                background: white;
+            }
+
+            .certificate {
+                width: 100%;
+                max-width: none;
+                min-height: 100vh;
+                box-shadow: none;
+                margin: 0;
+            }
+
+            .actions,
+            .back {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="certificate">
+
+    <div class="inner-border">
+
+        <div class="trophy">
+            🏆
+        </div>
+
+        <h1 class="certificate-title">
+            CERTIFICATE OF COMPLETION
+        </h1>
+
+        <p class="subtitle">
+            This certificate is proudly presented to
+        </p>
+
+        <div class="student">
+            {{ request.user.username }}
+        </div>
+
+        <p class="course-text">
+            for successfully completing the course
+        </p>
+
+        <div class="course">
+            {{ course.title }}
+        </div>
+
+        <p class="message">
+            This certificate recognizes the successful completion
+            of the course and the dedication demonstrated by the learner.
+            Congratulations on your achievement! 🎉
+        </p>
+
+        <div class="details">
+
+            <div class="date">
+                <strong>Date of Completion</strong>
+                <br>
+                {% now "d M Y" %}
+            </div>
+
+            <div class="signature">
+                <div class="signature-line">
+                    <span class="signature-name">
+                        Course Instructor
+                    </span>
+                </div>
+
+                <div class="signature-role">
+                    Authorized Signature
+                </div>
+            </div>
+
+            <div class="certificate-number">
+                <strong>Certificate No.</strong>
+                <br>
+                LMS-{{ course.id }}-{{ request.user.id }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="actions">
+    <button onclick="window.print()">
+        🖨️ Print / Save as PDF
+    </button>
+    <a href="{% url 'rate_course' course.id %}"
+   style="
+       display:inline-block;
+       margin-top:15px;
+       padding:12px 25px;
+       background:#c9a227;
+       color:#fff;
+       text-decoration:none;
+       border-radius:6px;
+       font-size:16px;
+       font-weight:bold;
+   ">
+    ⭐ Rate This Course
+</a>
+</div>
+
+<div style="text-align:center;">
+    <a class="back" href="{% url 'dashboard' %}">
+        ← Back to Dashboard
+    </a>
+</div>
+
+</body>
+</html>

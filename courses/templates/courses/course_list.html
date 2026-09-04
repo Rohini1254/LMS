@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Courses - LMS</title>
+</head>
+<body>
+
+<h1>Available Courses</h1>
+
+<form method="GET">
+    <input type="text" name="search" placeholder="Search course" value="{{ search }}">
+
+    <select name="category">
+        <option value="">All Categories</option>
+
+        {% for cat in categories %}
+            <option value="{{ cat }}"
+                {% if category == cat %}selected{% endif %}>
+                {{ cat }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <button type="submit">Search</button>
+</form>
+
+<hr>
+
+{% for course in courses %}
+
+    <h2>{{ course.title }}</h2>
+
+    <p>Category: {{ course.category }}</p>
+
+    {% if course.description %}
+        <p>{{ course.description }}</p>
+    {% endif %}
+
+    <a href="{% url 'course_detail' course.id %}">
+        View Course
+    </a>
+
+    <hr>
+
+{% empty %}
+
+    <p>No courses available.</p>
+
+{% endfor %}
+
+<br>
+
+<a href="{% url 'dashboard' %}">Dashboard</a>
+
+</body>
+</html>

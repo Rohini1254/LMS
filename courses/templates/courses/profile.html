@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Profile</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px 20px;
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+        }
+
+        .profile-container {
+            max-width: 700px;
+            margin: auto;
+        }
+
+        .header {
+            background: #1f2937;
+            color: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .avatar {
+            width: 90px;
+            height: 90px;
+            margin: auto;
+            border-radius: 50%;
+            background: white;
+            color: #1f2937;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .header h1 {
+            margin: 15px 0 5px;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.8;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 35px;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            color: #1f2937;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #374151;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1f2937;
+        }
+
+        .username {
+            background: #f3f4f6;
+            padding: 12px;
+            border-radius: 6px;
+            color: #555;
+        }
+
+        .save-btn {
+            width: 100%;
+            padding: 13px;
+            background: #1f2937;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .save-btn:hover {
+            background: #111827;
+        }
+
+        .actions {
+            margin-top: 25px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            display: inline-block;
+            padding: 11px 18px;
+            text-decoration: none;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            color: #1f2937;
+            background: white;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="profile-container">
+
+    <div class="header">
+
+        <div class="avatar">
+            {{ user.username|first|upper }}
+        </div>
+
+        <h1>My Profile</h1>
+
+        <p>Manage your student account</p>
+
+    </div>
+
+
+    <div class="profile-card">
+
+        <div class="section-title">
+            👤 Personal Information
+        </div>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="field">
+
+                <label>Username</label>
+
+                <div class="username">
+                    {{ user.username }}
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>First Name</label>
+
+                <input
+                    type="text"
+                    name="first_name"
+                    value="{{ user.first_name }}"
+                    placeholder="Enter your first name"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Last Name</label>
+
+                <input
+                    type="text"
+                    name="last_name"
+                    value="{{ user.last_name }}"
+                    placeholder="Enter your last name"
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label>Email Address</label>
+
+                <input
+                    type="email"
+                    name="email"
+                    value="{{ user.email }}"
+                    placeholder="Enter your email"
+                >
+
+            </div>
+
+
+            <button type="submit" class="save-btn">
+                💾 Save Profile
+            </button>
+
+        </form>
+
+
+        <div class="actions">
+
+            <a class="action-btn" href="{% url 'change_password' %}">
+                🔐 Change Password
+            </a>
+
+            <a class="action-btn" href="{% url 'dashboard' %}">
+                🏠 Back to Dashboard
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

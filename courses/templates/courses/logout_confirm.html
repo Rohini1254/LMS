@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Logout - LearnHub LMS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: #1f2937;
+            color: white;
+            padding: 18px 7%;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .logout-card {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 15px;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+        }
+
+        .icon {
+            font-size: 55px;
+        }
+
+        h1 {
+            margin: 15px 0 10px;
+            color: #1f2937;
+        }
+
+        .message {
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 7px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .logout {
+            background: #b91c1c;
+            color: white;
+        }
+
+        .logout:hover {
+            background: #991b1b;
+        }
+
+        .cancel {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
+        .cancel:hover {
+            background: #d1d5db;
+        }
+
+        .footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 500px) {
+            .logout-card {
+                padding: 30px 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🎓 LearnHub LMS
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="logout-card">
+
+        <div class="icon">
+            🚪
+        </div>
+
+        <h1>
+            Confirm Logout
+        </h1>
+
+        <p class="message">
+            Are you sure you want to log out of your LearnHub LMS account?
+        </p>
+
+
+        <form method="post" action="{% url 'logout_user' %}">
+
+            {% csrf_token %}
+
+            <div class="buttons">
+
+                <button
+                    type="submit"
+                    class="logout"
+                >
+                    Yes, Log Out
+                </button>
+
+
+                <a href="{% url 'dashboard' %}">
+                    <button
+                        type="button"
+                        class="cancel"
+                    >
+                        Cancel
+                    </button>
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<footer class="footer">
+
+    <p>
+        🎓 LearnHub LMS | Learn • Practice • Grow
+    </p>
+
+</footer>
+
+</body>
+</html>
