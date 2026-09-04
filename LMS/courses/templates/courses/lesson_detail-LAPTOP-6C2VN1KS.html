@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ lesson.title }} - LearnHub LMS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        nav {
+            background: #1f2937;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .lesson-box {
+            background: white;
+            padding: 40px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .lesson-icon {
+            font-size: 48px;
+            text-align: center;
+        }
+
+        .lesson-label {
+            text-align: center;
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 34px;
+            margin: 15px 0 30px;
+        }
+
+        .content {
+            background: #f8fafc;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 1.8;
+            color: #4b5563;
+            font-size: 16px;
+            min-height: 150px;
+        }
+
+        .complete-section {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .complete-section p {
+            color: #6b7280;
+        }
+
+        .complete-btn,
+        .quiz-btn {
+            display: inline-block;
+            padding: 13px 25px;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+
+        .complete-btn {
+            background: #1f2937;
+        }
+
+        .complete-btn:hover {
+            background: #111827;
+        }
+
+        .quiz-section {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 10px;
+            background: #f8fafc;
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .quiz-section h2 {
+            margin-top: 0;
+        }
+
+        .quiz-section p {
+            color: #6b7280;
+        }
+
+        .quiz-btn {
+            background: #16a34a;
+        }
+
+        .quiz-btn:hover {
+            background: #15803d;
+        }
+
+        .locked {
+            color: #6b7280;
+            background: #f3f4f6;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .completed {
+            color: #15803d;
+            font-weight: bold;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            margin-top: 70px;
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 650px) {
+
+            nav {
+                justify-content: center;
+            }
+
+            .nav-links {
+                text-align: center;
+            }
+
+            .nav-links a {
+                display: inline-block;
+                margin: 5px 8px;
+            }
+
+            .lesson-box {
+                padding: 25px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        🎓 LearnHub LMS
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'course_list' %}">
+            Home
+        </a>
+
+        <a href="{% url 'my_courses' %}">
+            My Courses
+        </a>
+
+        <a href="{% url 'dashboard' %}">
+            Dashboard
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="container">
+
+    <div class="lesson-box">
+
+        <div class="lesson-icon">
+            📖
+        </div>
+
+        <div class="lesson-label">
+            COURSE LESSON
+        </div>
+
+        <h1>
+            {{ lesson.title }}
+        </h1>
+
+
+        <div class="content">
+            {{ lesson.content }}
+        </div>
+
+
+        <div class="complete-section">
+
+            {% if completed %}
+
+                <h2 class="completed">
+                    ✅ Lesson Completed
+                </h2>
+
+                <p>
+                    You have successfully completed this lesson.
+                </p>
+
+            {% else %}
+
+                <h2>
+                    ✅ Complete This Lesson
+                </h2>
+
+                <p>
+                    Finished reading this lesson? Mark it as completed
+                    to update your course progress.
+                </p>
+
+                <form method="POST"
+                      action="{% url 'complete_lesson' lesson.id %}">
+
+                    {% csrf_token %}
+
+                    <button type="submit" class="complete-btn">
+                        ✅ Mark Lesson Complete
+                    </button>
+
+                </form>
+
+            {% endif %}
+
+        </div>
+
+
+        {% if all_lessons_completed %}
+
+            <div class="quiz-section">
+
+                <h2>
+                    🎯 Course Quiz Unlocked
+                </h2>
+
+                <p>
+                    You have completed all lessons.
+                    Now you can take the course quiz.
+                </p>
+
+                {% if quiz %}
+
+                    <a href="{% url 'quiz' lesson.course.id %}"
+                       class="quiz-btn">
+                        📝 Take Quiz
+                    </a>
+
+                {% endif %}
+
+            </div>
+
+        {% else %}
+
+            <div class="quiz-section">
+
+                <h2>
+                    🔒 Quiz Locked
+                </h2>
+
+                <p>
+                    Complete all lessons to unlock the quiz.
+                </p>
+
+                <div class="locked">
+                    📚
+                    {{ completed_count }}
+                    of
+                    {{ total_lessons }}
+                    lessons completed
+                </div>
+
+            </div>
+
+        {% endif %}
+
+
+        <a href="{% url 'my_courses' %}" class="back">
+            ← Back to My Courses
+        </a>
+
+    </div>
+
+</div>
+
+
+<footer class="footer">
+
+    <p>
+        🎓 LearnHub LMS | Learn • Practice • Grow
+    </p>
+
+</footer>
+
+</body>
+</html>

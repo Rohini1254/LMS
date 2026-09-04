@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Courses | LMS</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #172033;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        /* HERO */
+        .hero {
+            padding: 55px 7% 35px;
+            background: white;
+        }
+
+        .hero h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        /* SEARCH */
+        .search-section {
+            padding: 25px 7%;
+        }
+
+        .search-box {
+            background: white;
+            padding: 22px;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+            display: flex;
+            gap: 12px;
+        }
+
+        .search-box input,
+        .search-box select {
+            padding: 13px 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .search-box input {
+            flex: 1;
+        }
+
+        .search-box input:focus,
+        .search-box select:focus {
+            border-color: #2563eb;
+        }
+
+        .search-btn {
+            padding: 13px 25px;
+            border: none;
+            border-radius: 8px;
+            background: #2563eb;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* COURSES */
+        .courses-section {
+            padding: 10px 7% 60px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+        }
+
+        .course-count {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 24px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.10);
+        }
+
+        .course-top {
+            height: 120px;
+            background: linear-gradient(135deg, #2563eb, #4f46e5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 42px;
+            font-weight: 700;
+        }
+
+        .course-content {
+            padding: 22px;
+        }
+
+        .category {
+            display: inline-block;
+            background: #eef2ff;
+            color: #4338ca;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .course-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 45px;
+        }
+
+        .course-footer {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .view-btn {
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            padding: 10px 16px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .view-btn:hover {
+            background: #2563eb;
+        }
+
+        /* EMPTY */
+        .empty {
+            background: white;
+            padding: 50px;
+            text-align: center;
+            border-radius: 14px;
+            color: #6b7280;
+        }
+
+        /* MOBILE */
+        @media (max-width: 650px) {
+
+            .navbar {
+                padding: 16px 5%;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .hero {
+                padding: 40px 5% 25px;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .search-section,
+            .courses-section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+
+    <div class="logo">
+        LMS
+    </div>
+
+    <div class="nav-links">
+        <a href="{% url 'course_list' %}">Courses</a>
+        <a href="{% url 'dashboard' %}">Dashboard</a>
+    </div>
+
+</nav>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <h1>Explore Our Courses</h1>
+
+    <p>
+        Learn new skills, improve your knowledge and grow your career.
+    </p>
+
+</section>
+
+
+<!-- SEARCH -->
+<section class="search-section">
+
+    <form method="GET" class="search-box">
+
+        <input
+            type="text"
+            name="search"
+            placeholder="Search courses..."
+            value="{{ search }}"
+        >
+
+        <select name="category">
+
+            <option value="">
+                All Categories
+            </option>
+
+            {% for cat in categories %}
+
+                <option
+                    value="{{ cat }}"
+                    {% if category == cat %}selected{% endif %}
+                >
+                    {{ cat }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button type="submit" class="search-btn">
+            Search
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- COURSES -->
+<section class="courses-section">
+
+    <div class="section-header">
+
+        <h2>Available Courses</h2>
+
+        <span class="course-count">
+            {{ courses|length }} courses
+        </span>
+
+    </div>
+
+
+    {% if courses %}
+
+        <div class="course-grid">
+
+            {% for course in courses %}
+
+                <div class="course-card">
+
+                    <div class="course-top">
+                        LMS
+                    </div>
+
+                    <div class="course-content">
+
+                        <span class="category">
+                            {{ course.category }}
+                        </span>
+
+                        <h3>
+                            {{ course.title }}
+                        </h3>
+
+                        {% if course.description %}
+
+                            <p class="description">
+                                {{ course.description|truncatewords:18 }}
+                            </p>
+
+                        {% else %}
+
+                            <p class="description">
+                                Start learning this course today.
+                            </p>
+
+                        {% endif %}
+
+
+                        <div class="course-footer">
+
+                            <span class="price">
+                                ₹{{ course.price }}
+                            </span>
+
+                            <a
+                                href="{% url 'course_detail' course.id %}"
+                                class="view-btn"
+                            >
+                                View Course
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+
+            <h3>No courses found</h3>
+
+            <p>
+                Try another search or category.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+</body>
+</html>

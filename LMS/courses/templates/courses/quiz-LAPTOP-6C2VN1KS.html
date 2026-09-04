@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ course.title }} - Quiz | LearnHub LMS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #1f2937;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .hero {
+            background: white;
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .hero-icon {
+            font-size: 48px;
+        }
+
+        .hero h1 {
+            margin: 10px 0;
+            font-size: 34px;
+        }
+
+        .hero p {
+            color: #6b7280;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 35px auto 60px;
+            padding: 0 20px;
+        }
+
+        .question-card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+        }
+
+        .question-number {
+            color: #4338ca;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .question-card h3 {
+            margin-top: 8px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .option {
+            display: block;
+            padding: 13px 15px;
+            margin: 10px 0;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover {
+            background: #f8fafc;
+            border-color: #6b7280;
+        }
+
+        .option input {
+            margin-right: 10px;
+        }
+
+        .submit-section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+        }
+
+        .submit-btn {
+            padding: 14px 35px;
+            background: #1f2937;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 17px;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #111827;
+        }
+
+        .footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .navbar a {
+                margin: 5px 8px;
+            }
+
+            .hero h1 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar">
+
+    <div class="logo">
+        🎓 LearnHub LMS
+    </div>
+
+    <div>
+        <a href="{% url 'course_list' %}">
+            Courses
+        </a>
+
+        <a href="{% url 'dashboard' %}">
+            Dashboard
+        </a>
+    </div>
+
+</nav>
+
+
+<section class="hero">
+
+    <div class="hero-icon">
+        📝
+    </div>
+
+    <h1>
+        {{ course.title }} Quiz
+    </h1>
+
+    <p>
+        Test your knowledge and complete the quiz.
+    </p>
+
+</section>
+
+
+<div class="container">
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+
+        {% for question in questions %}
+
+            <div class="question-card">
+
+                <div class="question-number">
+                    QUESTION {{ forloop.counter }}
+                </div>
+
+                <h3>
+                    {{ question.question_text }}
+                </h3>
+
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="question_{{ question.id }}"
+                        value="{{ question.option_a }}"
+                    >
+
+                    {{ question.option_a }}
+
+                </label>
+
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="question_{{ question.id }}"
+                        value="{{ question.option_b }}"
+                    >
+
+                    {{ question.option_b }}
+
+                </label>
+
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="question_{{ question.id }}"
+                        value="{{ question.option_c }}"
+                    >
+
+                    {{ question.option_c }}
+
+                </label>
+
+
+                <label class="option">
+
+                    <input
+                        type="radio"
+                        name="question_{{ question.id }}"
+                        value="{{ question.option_d }}"
+                    >
+
+                    {{ question.option_d }}
+
+                </label>
+
+            </div>
+
+        {% endfor %}
+
+
+        <div class="submit-section">
+
+            <h2>🎯 Ready to Submit?</h2>
+
+            <p>
+                Make sure you have answered all the questions.
+            </p>
+
+            <button type="submit" class="submit-btn">
+                ✅ Submit Quiz
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<footer class="footer">
+
+    <p>
+        🎓 LearnHub LMS | Learn • Practice • Grow
+    </p>
+
+</footer>
+
+</body>
+</html>

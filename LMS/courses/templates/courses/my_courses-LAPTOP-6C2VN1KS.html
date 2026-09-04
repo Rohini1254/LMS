@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Courses - LearnHub LMS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #1f2937;
+        }
+
+        nav {
+            background: #1f2937;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 18px;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .hero {
+            background: white;
+            text-align: center;
+            padding: 45px 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .hero h1 {
+            font-size: 36px;
+            margin: 0 0 10px;
+        }
+
+        .hero p {
+            color: #6b7280;
+            font-size: 16px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1050px;
+            margin: 35px auto 60px;
+        }
+
+        .course-card {
+            background: white;
+            padding: 30px;
+            margin-bottom: 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+        }
+
+        .course-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .course-icon {
+            font-size: 40px;
+        }
+
+        .course-card h2 {
+            margin: 0;
+            font-size: 25px;
+        }
+
+        .description {
+            color: #6b7280;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .lesson-heading {
+            border-top: 1px solid #e5e7eb;
+            padding-top: 20px;
+            margin-bottom: 15px;
+        }
+
+        .lesson-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 12px;
+        }
+
+        .lesson {
+            display: block;
+            padding: 14px 16px;
+            background: #f8fafc;
+            color: #1f2937;
+            text-decoration: none;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+
+        .lesson:hover {
+            background: #1f2937;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .empty {
+            background: white;
+            padding: 50px 25px;
+            border-radius: 14px;
+            text-align: center;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+        }
+
+        .empty-icon {
+            font-size: 50px;
+        }
+
+        .browse-btn {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 12px 22px;
+            background: #1f2937;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+        }
+
+        .browse-btn:hover {
+            background: #111827;
+        }
+
+        .footer {
+            background: #1f2937;
+            color: white;
+            text-align: center;
+            padding: 25px;
+        }
+
+        @media (max-width: 650px) {
+
+            nav {
+                justify-content: center;
+            }
+
+            nav a {
+                margin: 5px 8px;
+            }
+
+            .hero h1 {
+                font-size: 29px;
+            }
+
+            .course-card {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+
+<nav>
+
+    <div class="logo">
+        🎓 LearnHub LMS
+    </div>
+
+    <div>
+        <a href="{% url 'course_list' %}">
+            Home
+        </a>
+
+        <a href="{% url 'my_courses' %}">
+            My Courses
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+    </div>
+
+</nav>
+
+
+<section class="hero">
+
+    <h1>📚 My Courses</h1>
+
+    <p>
+        Continue learning and track your enrolled courses.
+    </p>
+
+</section>
+
+
+<div class="container">
+
+
+    {% for enrollment in enrollments %}
+
+        <div class="course-card">
+
+            <div class="course-header">
+
+                <div class="course-icon">
+                    📚
+                </div>
+
+                <h2>
+                    {{ enrollment.course.title }}
+                </h2>
+
+            </div>
+
+
+            <p class="description">
+                {{ enrollment.course.description }}
+            </p>
+
+
+            <h3 class="lesson-heading">
+                📖 Course Lessons
+            </h3>
+
+
+            <div class="lesson-list">
+
+                {% for lesson in enrollment.course.lesson_set.all %}
+
+                    <a
+                        class="lesson"
+                        href="/lesson/{{ lesson.id }}"
+                    >
+                        📖 {{ lesson.title }}
+                    </a>
+
+                {% empty %}
+
+                    <p>
+                        No lessons available.
+                    </p>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+    {% empty %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                📚
+            </div>
+
+            <h2>
+                You haven't enrolled in any course yet.
+            </h2>
+
+            <p>
+                Explore our available courses and start learning today.
+            </p>
+
+            <a
+                href="{% url 'course_list' %}"
+                class="browse-btn"
+            >
+                Browse Courses →
+            </a>
+
+        </div>
+
+    {% endfor %}
+
+
+</div>
+
+
+<footer class="footer">
+
+    <p>
+        🎓 LearnHub LMS | Learn • Practice • Grow
+    </p>
+
+</footer>
+
+
+</body>
+</html>

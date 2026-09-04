@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Courses | LearnHub LMS</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            color: #0f172a;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            height: 70px;
+            background: #ffffff;
+            border-bottom: 1px solid #e2e8f0;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        /* PAGE */
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: 45px auto 70px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .page-header p {
+            color: #64748b;
+            font-size: 15px;
+        }
+
+        /* COURSE GRID */
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        /* COURSE CARD */
+
+        .course-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 25px;
+
+            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.06);
+
+            transition: 0.2s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(15, 23, 42, 0.10);
+        }
+
+        .course-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .course-card h2 {
+            font-size: 21px;
+            line-height: 1.35;
+        }
+
+        .status {
+            background: #dcfce7;
+            color: #166534;
+
+            padding: 6px 10px;
+            border-radius: 20px;
+
+            font-size: 11px;
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+        .description {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+
+            margin-bottom: 22px;
+        }
+
+        /* LESSONS */
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #64748b;
+
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+
+            margin-bottom: 12px;
+        }
+
+        .lesson-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            margin-bottom: 22px;
+        }
+
+        .lesson {
+            display: flex;
+            align-items: center;
+
+            padding: 11px 13px;
+
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+
+            border-radius: 8px;
+
+            color: #334155;
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .lesson:hover {
+            background: #eff6ff;
+            border-color: #bfdbfe;
+            color: #1d4ed8;
+        }
+
+        .lesson-icon {
+            width: 27px;
+            height: 27px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #dbeafe;
+            color: #2563eb;
+
+            border-radius: 50%;
+
+            font-size: 12px;
+            font-weight: bold;
+
+            margin-right: 10px;
+        }
+
+        /* BUTTON */
+
+        .course-footer {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 18px;
+
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .continue-btn {
+            display: inline-block;
+
+            padding: 12px 20px;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .continue-btn:hover {
+            background: #1d4ed8;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            background: white;
+
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+
+            padding: 60px 30px;
+
+            text-align: center;
+        }
+
+        .empty-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .empty h2 {
+            margin-bottom: 8px;
+        }
+
+        .empty p {
+            color: #64748b;
+            margin-bottom: 22px;
+        }
+
+        .browse-btn {
+            display: inline-block;
+
+            padding: 12px 22px;
+
+            background: #2563eb;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 9px;
+
+            font-weight: bold;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .course-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 0 4%;
+            }
+
+            .logo {
+                font-size: 20px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 30px;
+            }
+
+            .page-header h1 {
+                font-size: 27px;
+            }
+
+            .course-card {
+                padding: 20px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav>
+
+    <div class="logo">
+        LearnHub LMS
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'course_list' %}">
+            Home
+        </a>
+
+        <a href="{% url 'my_courses' %}">
+            My Courses
+        </a>
+
+        <a href="{% url 'logout' %}">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <div class="page-header">
+
+        <h1>
+            My Courses
+        </h1>
+
+        <p>
+            Continue learning from where you left off.
+        </p>
+
+    </div>
+
+
+    {% if enrollments %}
+
+        <div class="course-grid">
+
+
+            {% for enrollment in enrollments %}
+
+                <div class="course-card">
+
+
+                    <div class="course-top">
+
+                        <h2>
+                            {{ enrollment.course.title }}
+                        </h2>
+
+                        <span class="status">
+                            ENROLLED
+                        </span>
+
+                    </div>
+
+
+                    <p class="description">
+
+                        {{ enrollment.course.description }}
+
+                    </p>
+
+
+                    <div class="section-title">
+                        Course Lessons
+                    </div>
+
+
+                    <div class="lesson-list">
+
+                        {% for lesson in enrollment.course.lesson_set.all %}
+
+                            <a
+                                class="lesson"
+                                href="{% url 'lesson_detail' lesson.id %}"
+                            >
+
+                                <span class="lesson-icon">
+                                    {{ forloop.counter }}
+                                </span>
+
+                                {{ lesson.title }}
+
+                            </a>
+
+                        {% empty %}
+
+                            <p style="color:#64748b; font-size:14px;">
+                                No lessons available yet.
+                            </p>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="course-footer">
+
+                        {% with first_lesson=enrollment.course.lesson_set.first %}
+
+                            {% if first_lesson %}
+
+                                <a
+                                    href="{% url 'lesson_detail' first_lesson.id %}"
+                                    class="continue-btn"
+                                >
+                                    Continue Learning →
+                                </a>
+
+                            {% endif %}
+
+                        {% endwith %}
+
+                    </div>
+
+
+                </div>
+
+            {% endfor %}
+
+
+        </div>
+
+
+    {% else %}
+
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                📚
+            </div>
+
+            <h2>
+                No Courses Yet
+            </h2>
+
+            <p>
+                You haven't enrolled in any course yet.
+                Start learning by exploring our courses.
+            </p>
+
+            <a
+                href="{% url 'course_list' %}"
+                class="browse-btn"
+            >
+                Browse Courses
+            </a>
+
+        </div>
+
+
+    {% endif %}
+
+
+</div>
+
+
+</body>
+
+</html>

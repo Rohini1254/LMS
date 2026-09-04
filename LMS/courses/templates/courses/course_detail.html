@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ course.title }} | LearnHub LMS</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        .navbar {
+            background: #1e293b;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 24px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        .container {
+            width: 86%;
+            max-width: 1100px;
+            margin: 40px auto;
+        }
+
+        .course-header {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .category {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3730a3;
+            padding: 7px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .course-header h1 {
+            font-size: 34px;
+            margin-bottom: 15px;
+        }
+
+        .description {
+            color: #555;
+            line-height: 1.7;
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .course-info {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .info-box {
+            background: #f8fafc;
+            padding: 15px 20px;
+            border-radius: 8px;
+        }
+
+        .info-box strong {
+            display: block;
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 5px;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #16a34a;
+            margin-bottom: 20px;
+        }
+
+        .enroll-btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 13px 28px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .enroll-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .section {
+            background: white;
+            margin-top: 25px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+        }
+
+        .lesson {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .lesson:last-child {
+            border-bottom: none;
+        }
+
+        .lesson span {
+            color: #555;
+        }
+
+        .rating {
+            color: #f59e0b;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .review {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .review:last-child {
+            border-bottom: none;
+        }
+
+        .review strong {
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        @media (max-width: 700px) {
+            .course-header h1 {
+                font-size: 27px;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .navbar {
+                padding: 15px 4%;
+            }
+
+            .navbar a {
+                margin-left: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>LearnHub LMS</h2>
+
+        <div>
+            <a href="/">Home</a>
+            <a href="/courses/">Courses</a>
+            <a href="/my-courses/">My Courses</a>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Course Details -->
+        <div class="course-header">
+
+            <span class="category">
+                {{ course.category }}
+            </span>
+
+            <h1>{{ course.title }}</h1>
+
+            <p class="description">
+                {{ course.description }}
+            </p>
+
+            <div class="course-info">
+
+                <div class="info-box">
+                    <strong>Course</strong>
+                    Online Learning
+                </div>
+
+                <div class="info-box">
+                    <strong>Level</strong>
+                    Beginner
+                </div>
+
+                <div class="info-box">
+                    <strong>Access</strong>
+                    Lifetime
+                </div>
+
+            </div>
+
+            <div class="price">
+                ₹{{ course.price }}
+            </div>
+
+            {% if enrolled %}
+                <a href="/my-courses/" class="enroll-btn">
+                    Go to Course
+                </a>
+            {% else %}
+                <form method="POST" action="{% url 'enroll_course' course.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="enroll-btn">
+                        Enroll Now
+                    </button>
+                </form>
+            {% endif %}
+
+        </div>
+
+
+        <!-- Course Content -->
+        <div class="section">
+
+            <h2>📚 Course Content</h2>
+
+            {% if lessons %}
+
+            {% for lesson in lessons %}
+
+<div class="lesson">
+    <a href="{% url 'lesson_detail' lesson.id %}"
+       style="text-decoration: none; color: #2563eb; font-weight: bold;">
+        {{ forloop.counter }}. {{ lesson.title }}
+    </a>
+
+    <span>
+        Lesson
+    </span>
+</div>
+
+{% endfor %}
+
+                
+
+               
+
+            {% else %}
+
+                <p>No lessons available yet.</p>
+
+            {% endif %}
+
+        </div>
+
+
+        <!-- Course Rating -->
+        <div class="section">
+
+            <h2>⭐ Course Rating</h2>
+
+            <div class="rating">
+                ★★★★★
+            </div>
+
+            <p>
+                Learn from structured lessons and improve your skills
+                with LearnHub LMS.
+            </p>
+
+        </div>
+
+
+        <!-- Reviews -->
+        <div class="section">
+
+            <h2>💬 Student Reviews</h2>
+
+            <div class="review">
+                <strong>Student</strong>
+                <p>Very useful and easy to understand course.</p>
+            </div>
+
+            <div class="review">
+                <strong>Student</strong>
+                <p>Good course content and beginner friendly.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
